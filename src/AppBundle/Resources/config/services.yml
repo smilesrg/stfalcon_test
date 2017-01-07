@@ -1,0 +1,14 @@
+services:
+    app.repository.orm.image_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Repository\ORM\ImageRepository
+
+    app.manager.image_manager:
+        class: AppBundle\Manager\ImageManager
+        arguments:
+            - "@app.repository.orm.image_repository"
+
+    image.manager:
+        alias: app.manager.image_manager

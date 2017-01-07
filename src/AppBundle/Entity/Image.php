@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Image
  *
  * @ORM\Table(name="image")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\ImageRepository")
  * @Vich\Uploadable
  */
 class Image

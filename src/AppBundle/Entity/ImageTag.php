@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ImageTag
  *
  * @ORM\Table(name="image_tag")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageTagRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\ImageTagRepository")
  */
 class ImageTag
 {
