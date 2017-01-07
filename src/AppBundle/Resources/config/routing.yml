@@ -1,0 +1,10 @@
+images:
+    type:     rest
+    name_prefix:  api_
+    resource: AppBundle\Controller\ImagesController
+
+image_tags:
+    type:     rest
+    parent:   images
+    name_prefix:  api_
+    resource: AppBundle\Controller\ImageTagsController
