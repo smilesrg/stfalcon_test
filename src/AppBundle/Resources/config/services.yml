@@ -3,7 +3,7 @@ services:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
-            - AppBundle\Repository\ORM\ImageRepository
+            - AppBundle\Entity\Image
 
     app.manager.image_manager:
         class: AppBundle\Manager\ImageManager
