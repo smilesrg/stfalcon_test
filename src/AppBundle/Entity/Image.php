@@ -71,7 +71,8 @@ class Image
     private $imageName;
 
     /**
-     * @ORM\OneToMany(targetEntity="ImageTag", mappedBy="image")
+     * @ORM\ManyToMany(targetEntity="ImageTag", inversedBy="images")
+     * @ORM\JoinTable(name="images_to_image_tags")
      */
     private $tags;
 
@@ -239,10 +240,10 @@ class Image
     /**
      * Add tags
      *
-     * @param ImageTag $tags
+     * @param \AppBundle\Entity\ImageTag $tags
      * @return Image
      */
-    public function addTag(ImageTag $tags)
+    public function addTag(\AppBundle\Entity\ImageTag $tags)
     {
         $this->tags[] = $tags;
 
@@ -252,9 +253,9 @@ class Image
     /**
      * Remove tags
      *
-     * @param ImageTag $tags
+     * @param \AppBundle\Entity\ImageTag $tags
      */
-    public function removeTag(ImageTag $tags)
+    public function removeTag(\AppBundle\Entity\ImageTag $tags)
     {
         $this->tags->removeElement($tags);
     }

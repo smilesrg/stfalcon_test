@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Image;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,10 +31,17 @@ class ImageTag
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Image", inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Image", mappedBy="tags")
      */
-    private $image;
+    private $images;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -68,25 +77,35 @@ class ImageTag
     }
 
     /**
-     * Set image
+     * Add images
      *
-     * @param \AppBundle\Entity\Image $image
+     * @param Image $images
      * @return ImageTag
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
+    public function addImage(Image $images)
     {
-        $this->image = $image;
+        $this->images[] = $images;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Remove images
      *
-     * @return \AppBundle\Entity\Image 
+     * @param Image $images
      */
-    public function getImage()
+    public function removeImage(Image $images)
     {
-        return $this->image;
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
