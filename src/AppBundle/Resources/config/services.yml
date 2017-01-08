@@ -12,3 +12,9 @@ services:
 
     image.manager:
         alias: app.manager.image_manager
+
+    app.doctrine.listener:
+        class: AppBundle\EventListener\UniqueImageTag
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: prePersist }
