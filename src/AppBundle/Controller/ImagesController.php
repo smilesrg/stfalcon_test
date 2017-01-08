@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Image;
+use AppBundle\Form\ImageType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +58,17 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new Image",
+     *   input = "AppBundle\Form\ImageType",
+     *   output = "AppBundle\Entity\Image",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when invalid data has been provided"
+     *   }
+     * )
+     *
      * @Rest\View
      *
      * @param Request $request
@@ -64,7 +76,21 @@ class ImagesController extends FOSRestController
      */
     public function postImageAction(Request $request)
     {
+        $image = new Image();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(ImageType::class, $image);
 
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em->persist($image);
+            $em->flush();
+
+            return $image;
+        }
+
+        return $form;
     }
 
     /**

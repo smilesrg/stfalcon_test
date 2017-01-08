@@ -5,12 +5,14 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * ImageTag
  *
- * @ORM\Table(name="image_tag")
+ * @ORM\Table(name="image_tags")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\ImageTagRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class ImageTag
 {
@@ -20,13 +22,15 @@ class ImageTag
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=64)
+     * @ORM\Column(name="name", type="string", length=64, unique=true)
+     * @JMS\Expose
      */
     private $name;
 
@@ -79,12 +83,12 @@ class ImageTag
     /**
      * Add images
      *
-     * @param Image $images
+     * @param Image $image
      * @return ImageTag
      */
-    public function addImage(Image $images)
+    public function addImage(Image $image)
     {
-        $this->images[] = $images;
+        $this->images[] = $image;
 
         return $this;
     }
@@ -92,11 +96,11 @@ class ImageTag
     /**
      * Remove images
      *
-     * @param Image $images
+     * @param Image $image
      */
-    public function removeImage(Image $images)
+    public function removeImage(Image $image)
     {
-        $this->images->removeElement($images);
+        $this->images->removeElement($image);
     }
 
     /**
