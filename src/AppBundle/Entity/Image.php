@@ -99,7 +99,8 @@ class Image
      * @ORM\ManyToMany(targetEntity="ImageTag", inversedBy="images", cascade={"persist"})
      * @ORM\JoinTable(name="images_to_image_tags")
      * @JMS\Expose
-     * @JMS\Type("ArrayCollection<AppBundle\Entity\ImageTag>")
+     * @JMS\Type("array<string>")
+     * @JMS\Accessor(getter="getTagsAsVector")
      */
     private $tags;
 
@@ -271,6 +272,20 @@ class Image
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTagsAsVector()
+    {
+        $result = new ArrayCollection();
+
+        foreach ($this->getTags() as $tag) {
+            $result->add($tag->getName());
+        }
+
+        return $result;
     }
 
     /**
