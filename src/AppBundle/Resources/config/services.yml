@@ -10,8 +10,22 @@ services:
         arguments:
             - "@app.repository.orm.image_repository"
 
+    app.repository.orm.image_tag_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\ImageTag
+
+    app.manager.image_tag_manager:
+        class: AppBundle\Manager\ImageTagManager
+        arguments:
+            - "@app.repository.orm.image_tag_repository"
+
     image.manager:
         alias: app.manager.image_manager
+
+    image_tag.manager:
+        alias: app.manager.image_tag_manager
 
     app.doctrine.listener:
         class: AppBundle\EventListener\UniqueImageTag

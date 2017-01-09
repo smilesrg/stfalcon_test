@@ -32,6 +32,8 @@ class ImageTagManager
      */
     public function getAllTags()
     {
-        return $this->repository->findAllTagNames();
+        $tags = $this->repository->findAllTagNames();
+
+        return array_column($tags, "name");
     }
 }

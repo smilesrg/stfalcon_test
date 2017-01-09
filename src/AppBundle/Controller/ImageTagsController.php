@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-class ImageTagsController
+class ImageTagsController extends FOSRestController
 {
     /**
      * @ApiDoc(
@@ -23,6 +24,6 @@ class ImageTagsController
      */
     public function getImageTagsAction()
     {
-       return new JsonResponse();
+       return $this->get('image_tag.manager')->getAllTags();
     }
 }
