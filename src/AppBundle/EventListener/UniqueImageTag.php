@@ -52,7 +52,7 @@ class UniqueImageTag
         // we're interested in Images only
         if ($entity instanceof Image) {
             $entityManager = $args->getEntityManager();
-            $tags = $entity->getIngredients();
+            $tags = $entity->getTags();
 
             foreach($tags as $tag) {
 

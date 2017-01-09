@@ -18,3 +18,12 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: prePersist }
+
+    app.form.handler.image_form_handler:
+        class: AppBundle\Form\Handler\ImageFormHandler
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@form.factory"
+
+    image.form.handler:
+        alias: app.form.handler.image_form_handler

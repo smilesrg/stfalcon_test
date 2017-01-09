@@ -16,8 +16,18 @@ class ImageRepository extends EntityRepository implements ImageRepositoryInterfa
     /**
      * {@inheritdoc}
      */
-    public function findById($id)
+    public function findOneById($id)
     {
-        return $this->findBy(['id' => $id]);
+        return parent::findOneById($id);
+    }
+
+    public function deleteById($id)
+    {
+        $image = $this->findOneById($id);
+
+        if ($image) {
+            $this->getEntityManager()->remove($image);
+            $this->getEntityManager()->flush();
+        }
     }
 }

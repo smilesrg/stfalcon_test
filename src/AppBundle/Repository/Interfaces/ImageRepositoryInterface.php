@@ -16,8 +16,15 @@ interface ImageRepositoryInterface
     /**
      * Finds Image by it's Id.
      *
-     * @param $id
+     * @param int $id
      * @return Image|null
      */
-    public function findById($id);
+    public function findOneById($id);
+
+    /**
+     * Delete image by id.
+     *
+     * @param int $id
+     */
+    public function deleteById($id);
 }
