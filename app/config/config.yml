@@ -85,7 +85,7 @@ doctrine_migrations:
 
 fos_rest:
     disable_csrf_role: ROLE_API
-    param_fetcher_listener: true
+    param_fetcher_listener: force
     body_listener: true
     format_listener:
         enabled: true

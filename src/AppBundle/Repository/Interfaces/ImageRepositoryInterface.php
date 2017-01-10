@@ -9,9 +9,10 @@ interface ImageRepositoryInterface
     /**
      * Finds all images in the repository.
      *
+     * @param array|null $tags
      * @return array The Images.
      */
-    public function findAll();
+    public function findImagesQb($tags = null);
 
     /**
      * Finds Image by it's Id.

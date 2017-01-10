@@ -21,14 +21,17 @@ class ImagesController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
+     * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page number.")
+     * @Rest\QueryParam(name="perPage", requirements="\d+", default="10", description="Limit per page.")
+     * @Rest\QueryParam(name="tags", description="Filter by tags.")
      * @Rest\View
      *
      * @param Image $image
      * @return array
      */
-    public function getImagesAction()
+    public function getImagesAction($page, $perPage, $tags)
     {
-        return $this->get('image.manager')->getAllImages();
+        return $this->get('image.manager')->getAllImages($page, $perPage, $tags);
     }
 
     /**

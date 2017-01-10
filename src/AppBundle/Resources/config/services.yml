@@ -9,6 +9,7 @@ services:
         class: AppBundle\Manager\ImageManager
         arguments:
             - "@app.repository.orm.image_repository"
+            - "@knp_paginator"
 
     app.repository.orm.image_tag_repository:
         class: Doctrine\ORM\EntityRepository

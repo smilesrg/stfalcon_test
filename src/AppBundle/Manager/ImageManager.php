@@ -4,30 +4,43 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\Image;
 use AppBundle\Repository\Interfaces\ImageRepositoryInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ImageManager
 {
     /** @var ImageRepositoryInterface */
     private $repository;
 
+    /** @var PaginatorInterface */
+    private $paginator;
+
     /**
      * ImageManager constructor.
      *
      * @param ImageRepositoryInterface $repository
      */
-    public function __construct(ImageRepositoryInterface $repository)
+    public function __construct(ImageRepositoryInterface $repository, PaginatorInterface $paginator)
     {
         $this->repository = $repository;
+        $this->paginator = $paginator;
     }
 
     /**
      * Returns array of all Images
      *
-     * @return Image[]
+     * @param $page
+     * @param $perPage
+     * @param null $tags
+     * @return PaginationInterface
      */
-    public function getAllImages()
+    public function getAllImages($page, $perPage, $tags = null)
     {
-        return $this->repository->findAll();
+        $imagesQb = $this->repository->findImagesQb($tags);
+
+        return $this->paginator->paginate(
+            $imagesQb, $page, $perPage
+        );
     }
 
     /**

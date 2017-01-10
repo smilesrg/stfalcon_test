@@ -21,6 +21,9 @@ class ImageRepository extends EntityRepository implements ImageRepositoryInterfa
         return parent::findOneById($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deleteById($id)
     {
         $image = $this->findOneById($id);
@@ -29,5 +32,21 @@ class ImageRepository extends EntityRepository implements ImageRepositoryInterfa
             $this->getEntityManager()->remove($image);
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Query builder for finding images, filtering by tags
+     */
+    public function findImagesQb($tags = null)
+    {
+        $qb = $this->createQueryBuilder('i');
+
+        if ($tags) {
+            $qb->join('i.tags', 'tag')
+               ->where('tag.name IN (:tags)')
+                ->setParameter('tags', $tags);
+        }
+
+        return $qb;
     }
 }
