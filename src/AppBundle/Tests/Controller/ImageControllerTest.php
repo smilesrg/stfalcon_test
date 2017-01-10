@@ -8,18 +8,20 @@
 
 namespace AppBundle\Tests\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class ImageControllerTest extends WebTestCase
+class ImageControllerTest extends ApiTestCase
 {
     public function testGetImage()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/api/images/1.json');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $client->request('GET', '/api/images/1.json');
+        $this->assertJsonResponse($client->getResponse(), Response::HTTP_OK);
+        $content = json_decode($client->getResponse()->getContent());
+        $this->assertArrayHasKey('title', $content);
+        //TODO: check content
     }
 
     public function testGetImages()
@@ -27,36 +29,39 @@ class ImageControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/api/images');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($client->getResponse(), Response::HTTP_OK);
     }
 
     public function testPostImage()
     {
+        $imageContent = [
+            'title' => 'Functional test Title',
+            'description' => 'Description',
+            'tags' => [
+                'newtag', 'testtag', 'functionaltest',
+            ]
+        ];
+
         $client = static::createClient();
-        $client->request(
-            'POST',
-            '/api/v1/pages.json',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            '{"title":"title1","body":"body1"}'
-        );
-        $this->assertJsonResponse($client->getResponse(), 201, false);
+        $client->request('POST', '/api/images', [], [], [
+            'CONTENT_TYPE' => 'application/json'
+        ], json_encode($imageContent));
+
+        $this->assertJsonResponse($client->getResponse(), Response::HTTP_CREATED);
     }
 
-    public function testJsonPostPageActionShouldReturn400WithBadParameters()
+    public function testPostImageWithBadRequest()
     {
-        $this->client = static::createClient();
-        $this->client->request(
-            'POST',
-            '/api/v1/pages.json',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            '{"ninja":"turtles"}'
-        );
+        $imageContent = [
+            'extrafield' => 'content',
+            'tags' => 'blabla',
+        ];
 
-        $this->assertJsonResponse($this->client->getResponse(), 400, false);
+        $client = static::createClient();
+        $client->request('POST','/api/images', [], [], [
+            'CONTENT_TYPE' => 'application/json'
+        ], json_encode($imageContent));
+
+        $this->assertJsonResponse($client->getResponse(), Response::HTTP_BAD_REQUEST);
     }
 }
