@@ -78,7 +78,7 @@ class ImagesController extends FOSRestController
      *   }
      * )
      *
-     * @Rest\View
+     * @Rest\View(statusCode=201)
      *
      * @param Request $request
      * @return array
