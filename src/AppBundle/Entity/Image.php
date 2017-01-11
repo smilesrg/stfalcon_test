@@ -258,10 +258,13 @@ class Image
      * Remove tags
      *
      * @param \AppBundle\Entity\ImageTag $tag
+     * @return Image
      */
     public function removeTag(ImageTag $tag)
     {
         $this->tags->removeElement($tag);
+
+        return $this;
     }
 
     /**

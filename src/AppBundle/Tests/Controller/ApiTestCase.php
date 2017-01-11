@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiTestCase extends WebTestCase
 {
-
     /**
      * @param Response $response
      * @param int $statusCode

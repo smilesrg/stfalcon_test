@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Nelmio\ApiDocBundle\NelmioApiDocBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            $bundles[] = new DavidBadura\FakerBundle\DavidBaduraFakerBundle();
         }
 
         return $bundles;
