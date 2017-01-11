@@ -17,13 +17,13 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Gets all images",
+     *   description = "Get all images",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
      * )
      * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page number.")
-     * @Rest\QueryParam(name="perPage", requirements="\d+", default="10", description="Limit per page.")
+     * @Rest\QueryParam(name="perPage", requirements="[1-50]+", default="1", description="Limit per page.")
      * @Rest\QueryParam(map=true, name="tags", description="Filter by tags.")
      * @Rest\View
      *
@@ -38,7 +38,7 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Gets an Image for a given id",
+     *   description = "Get an Image with given id",
      *   output = "AppBundle\Entity\Image",
      *   requirements={
      *      {
@@ -69,7 +69,7 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Creates a new Image",
+     *   description = "Create a new Image",
      *   output = "AppBundle\Entity\Image",
      *   statusCodes = {
      *     201 = "Returned when successful",
@@ -95,7 +95,7 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Uploads a file to Image",
+     *   description = "Upload a file to the Image",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when invalid data has been provided"
@@ -150,7 +150,7 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Patches an Image",
+     *   description = "Update an Image partially",
      *   output = "AppBundle\Entity\Image",
      *   requirements={
      *      {
@@ -187,7 +187,7 @@ class ImagesController extends FOSRestController
     /**
      * @ApiDoc(
      *   section = "Images",
-     *   description = "Removes an Image completely",
+     *   description = "Remove an Image completely",
      *   requirements={
      *      {
      *          "name"="imageId",
