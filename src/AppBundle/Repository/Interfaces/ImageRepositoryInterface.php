@@ -23,6 +23,14 @@ interface ImageRepositoryInterface
     public function findOneById($id);
 
     /**
+     * Updates an image and store it to the database.
+     *
+     * @param Image $image
+     * @return mixed
+     */
+    public function update(Image $image);
+
+    /**
      * Delete image by id.
      *
      * @param int $id

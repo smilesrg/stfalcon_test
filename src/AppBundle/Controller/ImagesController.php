@@ -7,6 +7,7 @@ use AppBundle\Form\ImageType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\DomCrawler\Form;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -23,7 +24,7 @@ class ImagesController extends FOSRestController
      * )
      * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page number.")
      * @Rest\QueryParam(name="perPage", requirements="\d+", default="10", description="Limit per page.")
-     * @Rest\QueryParam(name="tags", description="Filter by tags.")
+     * @Rest\QueryParam(map=true, name="tags", description="Filter by tags.")
      * @Rest\View
      *
      * @param Image $image
@@ -100,18 +101,50 @@ class ImagesController extends FOSRestController
      *     400 = "Returned when invalid data has been provided"
      *   },
      *   parameters={
-     *      {"name"="file", "dataType"="file", "required"=true, "description"="Image File"}
+     *      {"name"="imageFile", "dataType"="file", "required"=true, "description"="Image File"}
      *   }
      * )
-     *
+     * @Rest\FileParam(name="imageFile", image=true)
+     * @Rest\View(statusCode=201)
+     * @Rest\Post("/images/{imageId}/file")
+     * @param $imageId
+     * @param $imageFile
+     * @return array
+     * @internal param Request $request
+     */
+    public function postImageFileAction($imageId, $imageFile)
+    {
+        $image = $this->findImageById($imageId);
+
+        $image->setImageFile($imageFile);
+
+        $this->get('image.manager')->updateImage($image);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "Images",
+     *   description = "Download Image File",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
      * @Rest\View
      *
-     * @param Request $request
-     * @return array
+     * @param $imageId
+     * @return BinaryFileResponse
+     * @internal param Request $request
+     * @internal param $imageFile
      */
-    public function postImageFileAction(Request $request, $imageId)
+    public function getImageFileAction($imageId)
     {
-        //TODO: upload image file
+        $image = $this->findImageById($imageId);
+
+        if (empty($image->getImageFile())) {
+            throw new NotFoundHttpException("Image has no file");
+        }
+
+        return new BinaryFileResponse($image->getImageFile());
     }
 
     /**

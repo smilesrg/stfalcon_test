@@ -17,7 +17,6 @@ class ImageType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('imageFile')
             ->add('tags', CollectionType::class, [
                 'entry_type' => ImageTagType::class,
                 'allow_add'    => true,

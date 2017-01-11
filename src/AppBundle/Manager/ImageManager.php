@@ -6,6 +6,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Repository\Interfaces\ImageRepositoryInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageManager
 {
@@ -65,5 +66,10 @@ class ImageManager
         if ($image) {
             $this->repository->deleteById($imageId);
         }
+    }
+
+    public function updateImage(Image $image)
+    {
+        $this->repository->update($image);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository\ORM;
 
+use AppBundle\Entity\Image;
 use AppBundle\Repository\Interfaces\ImageRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -32,6 +33,12 @@ class ImageRepository extends EntityRepository implements ImageRepositoryInterfa
             $this->getEntityManager()->remove($image);
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function update(Image $image)
+    {
+        $this->getEntityManager()->persist($image);
+        $this->getEntityManager()->flush();
     }
 
     /**
