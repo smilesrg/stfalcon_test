@@ -31,8 +31,6 @@ doctrine:
         #   3. Uncomment next line:
         #     path:     "%database_path%"
 
-liip_functional_test: ~
-
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
 
