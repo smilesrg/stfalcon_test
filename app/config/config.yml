@@ -97,3 +97,13 @@ fos_rest:
     access_denied_listener:
         # all requests using the 'json' format will return a 403 on an access denied violation
         json: true
+
+jms_serializer:
+    metadata:
+        directories:
+            KnpPaginatorBundle:
+                namespace_prefix: Knp\Bundle\PaginatorBundle
+                path: %kernel.root_dir%/config/serializer/KnpPaginatorBundle
+            KnpPager:
+                namespace_prefix: Knp\Component\Pager
+                path: %kernel.root_dir%/config/serializer/KnpPager
